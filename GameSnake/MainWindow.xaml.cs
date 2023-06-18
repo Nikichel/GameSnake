@@ -21,109 +21,77 @@ namespace GameSnake
     /// </summary>
     public partial class MainWindow : Window
     {
-        private Ellipse fruit;
+        /*private Ellipse fruit;
         private int fX, fY;
 
-        private Rectangle cube;
+        List<Rectangle> snake;
         private int _height;
         private int _width;
         private int curX, curY;
-        private int dX, dY;
+        private int dX, dY;*/
+        Snake snake;
+        Fruit fruit;
+        int gameScore;
         DispatcherTimer timer;
         public MainWindow()
         {
             InitializeComponent();
-            _height = 20;
-            _width = 20;
-
-            curX = (int)gameField.Width/2;
-            curY = (int)gameField.Height/2;
-            curX -= curX % _width;
-            curY -= curY % _height;
-
-            dY = 0;
-            dX = 1;
+            snake = new Snake(gameField);
+            fruit = new Fruit(gameField);
+            gameScore =0;
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(300);
+            timer.Interval = TimeSpan.FromMilliseconds(150);
             timer.Tick += new EventHandler(update);
             timer.Start();
             this.KeyDown += new KeyEventHandler(KeyHandler);
         }
 
-        private void generatorFruit()
-        {
-            Random random = new Random();
-            fX = random.Next(30, (int)gameField.Width-30);
-            fY = random.Next(30, (int)gameField.Height-30);
-            fX -= fX % _width;
-            fY -= fY % _height;
-
-            /*            fY -= _height / 2;
-                        fX -= _width / 2;*/
-
-            fruit = new Ellipse();
-            createFruit();
-
-            gameField.Children.Add(fruit);
-        }
-
-        private void createFruit()
-        {
-            fruit.Height = _height;
-            fruit.Width = _width;
-            fruit.Fill = Brushes.Red;
-            fruit.Stroke = Brushes.Green;
-            fruit.Margin = new Thickness(fX, fY, 0, 0);
-        }
-
         private void update(object sender, EventArgs e)
         {
             gameField.Children.Clear();
-            curY += _height*dY;
-            curX += _width*dX;
-            cube.Margin = new Thickness(curX, curY, 0, 0);
-            gameField.Children.Add(cube);
-            if (curX == fX && curY == fY)
-                MessageBox.Show("Взял!");
-            gameField.Children.Add(fruit);
+            snake._update();
+            if (snake.X == fruit.X && snake.Y == fruit.Y)
+            {
+                gameScore += fruit.Point;
+                snake.eatFruct();
+                fruit.generatorFruit();
+            }
+            if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0)
+            {
+                MessageBox.Show("Вы проиграли\n" + "Ваш счет: " + gameScore.ToString());
+                gameScore = 0;
+                snake.die();
+            }
+            fruit._update();
+            score.Text = "Score: " + gameScore.ToString();
         }
         private void KeyHandler(object sender, KeyEventArgs e)
         {
-            switch (e.Key)
+            if (e.Key == Key.Up && snake.dX != 0)
             {
-                case Key.Up:
-                    dY = -1;
-                    dX = 0;
-                    break;
-                case Key.Down:
-                    dY = 1;
-                    dX = 0;
-                    break;
-                case Key.Right:
-                    dX = 1;
-                    dY = 0;
-                    break;
-                case Key.Left:
-                    dX = -1;
-                    dY = 0;
-                    break;
+                snake.dY = -1;
+                snake.dX = 0;
             }
-        }
-        private void createCube()
-        {
-            cube.Height = _height;
-            cube.Width = _width;
-            cube.Fill = new SolidColorBrush(Colors.Violet);
-            cube.Stroke = new SolidColorBrush(Colors.Violet);
-            cube.Margin = new Thickness(curX, curY, 0, 0);
+            if (e.Key == Key.Down && snake.dX != 0)
+            {
+                snake.dY = 1;
+                snake.dX = 0;
+            }
+            if (e.Key == Key.Left && snake.dY != 0)
+            {
+                snake.dX = -1;
+                snake.dY = 0;
+            }
+            if (e.Key == Key.Right && snake.dY!=0)
+            {
+                snake.dX = 1;
+                snake.dY = 0;
+            }
         }
 
         private void gameLoaded(object sender, RoutedEventArgs e)
         {
-            generatorFruit();
-            cube = new Rectangle();
-            createCube();
-            gameField.Children.Add(cube);
+           
         }
     }
 }

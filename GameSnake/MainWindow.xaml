@@ -5,12 +5,17 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:GameSnake"
         mc:Ignorable="d"
-        Title="GameSnake" Height="512" Width="1024" WindowStartupLocation="CenterScreen">
+        Title="GameSnake" Height="550" Width="1080" WindowStartupLocation="CenterScreen">
     <Grid>
-        <Canvas x:Name="gameField" HorizontalAlignment="Center" Height="496" VerticalAlignment="Top" Width="1024" OpacityMask="Black" Background="#FF2A8339" Grid.Column="1" Grid.RowSpan="2" Loaded="gameLoaded"/>
-        <Border HorizontalAlignment="Right" Height="498" Margin="0,-2,0,0" VerticalAlignment="Top" Width="20" Background="#FF723B20"/>
-        <Border HorizontalAlignment="Left" Height="498" Margin="0,-2,0,0" VerticalAlignment="Top" Width="20" Background="#FF723B20"/>
-        <Border HorizontalAlignment="Center" Height="20" VerticalAlignment="Top"  Width="1024" Background="#FF723B20"/>
-        <Border HorizontalAlignment="Center" Height="20" VerticalAlignment="Bottom"  Width="1024" Background="#FF723B20"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="35*"/>
+            <RowDefinition Height="489*"/>
+        </Grid.RowDefinitions>
+        <Canvas x:Name="gameField" HorizontalAlignment="Center" Height="480" VerticalAlignment="Top" Width="1040" OpacityMask="Black" Background="#FF2A8339" Loaded="gameLoaded" Margin="0,20,0,0" Grid.RowSpan="2"/>
+        <Border HorizontalAlignment="Right" Height="510" VerticalAlignment="Top" Width="15" Background="#FF723B20" Grid.RowSpan="2"/>
+        <Border HorizontalAlignment="Left" Height="524" VerticalAlignment="Top" Width="15" Background="#FF723B20" Grid.RowSpan="2"/>
+        <Border HorizontalAlignment="Center" Height="20" VerticalAlignment="Top"  Width="1080" Background="#FF723B20"/>
+        <Border HorizontalAlignment="Center" Height="20" VerticalAlignment="Top"  Width="1080" Background="#FF723B20" Margin="0,464,0,0" Grid.Row="1"/>
+        <TextBox x:Name="score" HorizontalAlignment="Left" Height="37" Margin="900,20,0,0" Grid.RowSpan="2" TextWrapping="Wrap" VerticalAlignment="Top" Width="150" Background="#FFA8CEAF" FontSize="25" Text="Score: 0" FontFamily="Yu Gothic Medium" BorderBrush="#7FA8CEAF" Foreground="Black" IsReadOnly="True"/>
     </Grid>
 </Window>
