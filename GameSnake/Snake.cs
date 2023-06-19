@@ -42,7 +42,14 @@ namespace GameSnake
             cube.Height = _height;
             cube.Width = _width;
 
-            cube.Fill = Brushes.Violet;
+            byte g = Convert.ToByte(0);
+            if (113-5*body.Count>0)
+            {
+                g=Convert.ToByte(113-5*body.Count);
+            }
+
+            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(238, g, 214));
+            cube.Fill = brush;
             cube.Stroke = Brushes.Violet;
             cube.Margin = new Thickness(startX, startY, 0, 0);
             return cube;
@@ -80,9 +87,20 @@ namespace GameSnake
             }
         }
 
+        public bool eatBody()
+        {
+            for (int i = 1; i<body.Count; i++)
+            {
+                if (body.ElementAt(0).Margin == body.ElementAt(i).Margin)
+                    return true;
+            }
+            return false;
+        }
+
         public void _update()
         {
             move();
+            eatBody();
             foreach (Rectangle rectangle in body)
             {
                 gameField.Children.Add(rectangle);

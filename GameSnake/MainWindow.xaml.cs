@@ -21,26 +21,22 @@ namespace GameSnake
     /// </summary>
     public partial class MainWindow : Window
     {
-        /*private Ellipse fruit;
-        private int fX, fY;
-
-        List<Rectangle> snake;
-        private int _height;
-        private int _width;
-        private int curX, curY;
-        private int dX, dY;*/
         Snake snake;
         Fruit fruit;
         int gameScore;
+        int gameSpeed;
         DispatcherTimer timer;
+        int lastScore;
         public MainWindow()
         {
             InitializeComponent();
+            gameSpeed = 150;
             snake = new Snake(gameField);
             fruit = new Fruit(gameField);
-            gameScore =0;
+            gameScore = 0;
+            lastScore = 0;
             timer = new DispatcherTimer();
-            timer.Interval = TimeSpan.FromMilliseconds(150);
+            timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
             timer.Tick += new EventHandler(update);
             timer.Start();
             this.KeyDown += new KeyEventHandler(KeyHandler);
@@ -56,11 +52,20 @@ namespace GameSnake
                 snake.eatFruct();
                 fruit.generatorFruit();
             }
-            if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0)
+            if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0 || snake.eatBody())
             {
                 MessageBox.Show("Вы проиграли\n" + "Ваш счет: " + gameScore.ToString());
                 gameScore = 0;
                 snake.die();
+                gameSpeed=150;
+                timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
+            }
+            if (gameScore%30==0 && gameScore!=lastScore) 
+            {
+                lastScore = gameScore;
+                gameSpeed -=10;
+                if(gameSpeed>50)
+                    timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
             }
             fruit._update();
             score.Text = "Score: " + gameScore.ToString();
