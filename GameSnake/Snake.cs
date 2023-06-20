@@ -32,6 +32,12 @@ namespace GameSnake
             dx = 1; dy = 0;
         }
 
+        public List<Rectangle> Body
+        {
+            get { return body; }
+            set { body = value; }
+        }
+
         private void increaseLength()
         {
             body.Add(createPart(x, y));
@@ -42,15 +48,14 @@ namespace GameSnake
             cube.Height = _height;
             cube.Width = _width;
 
-            byte g = Convert.ToByte(0);
-            if (113-5*body.Count>0)
+            byte b = Convert.ToByte(0);
+            if (143-2*body.Count>0)
             {
-                g=Convert.ToByte(113-5*body.Count);
+                b=Convert.ToByte(143-body.Count);
             }
 
-            SolidColorBrush brush = new SolidColorBrush(Color.FromRgb(238, g, 214));
-            cube.Fill = brush;
-            cube.Stroke = Brushes.Violet;
+            cube.Fill = new SolidColorBrush(Color.FromRgb(121, 48, b));
+            cube.Stroke = new SolidColorBrush(Color.FromRgb(48, 33, 79));
             cube.Margin = new Thickness(startX, startY, 0, 0);
             return cube;
         }

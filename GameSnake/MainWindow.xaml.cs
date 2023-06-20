@@ -21,6 +21,8 @@ namespace GameSnake
     /// </summary>
     public partial class MainWindow : Window
     {
+        public static int startGame = 0;
+
         Snake snake;
         Fruit fruit;
         int gameScore;
@@ -30,6 +32,8 @@ namespace GameSnake
         public MainWindow()
         {
             InitializeComponent();
+            mainFrame.NavigationService.Navigate(new Menu());
+
             gameSpeed = 150;
             snake = new Snake(gameField);
             fruit = new Fruit(gameField);
@@ -44,31 +48,34 @@ namespace GameSnake
 
         private void update(object sender, EventArgs e)
         {
-            gameField.Children.Clear();
-            snake._update();
-            if (snake.X == fruit.X && snake.Y == fruit.Y)
+            if (startGame == 1) 
             {
-                gameScore += fruit.Point;
-                snake.eatFruct();
-                fruit.generatorFruit();
-            }
-            if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0 || snake.eatBody())
-            {
-                MessageBox.Show("Вы проиграли\n" + "Ваш счет: " + gameScore.ToString());
-                gameScore = 0;
-                snake.die();
-                gameSpeed=150;
-                timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
-            }
-            if (gameScore%30==0 && gameScore!=lastScore) 
-            {
-                lastScore = gameScore;
-                gameSpeed -=10;
-                if(gameSpeed>50)
+                gameField.Children.Clear();
+                snake._update();
+                if (snake.X == fruit.X && snake.Y == fruit.Y)
+                {
+                    gameScore += fruit.Point;
+                    snake.eatFruct();
+                    fruit.generatorFruit();
+                }
+                if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0 || snake.eatBody())
+                {
+                    MessageBox.Show("Вы проиграли\n" + "Ваш счет: " + gameScore.ToString());
+                    gameScore = 0;
+                    snake.die();
+                    gameSpeed=150;
                     timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
+                }
+                if (gameScore%30==0 && gameScore!=lastScore)
+                {
+                    lastScore = gameScore;
+                    gameSpeed -=10;
+                    if (gameSpeed>50)
+                        timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
+                }
+                fruit._update();
+                score.Text = "Score: " + gameScore.ToString();
             }
-            fruit._update();
-            score.Text = "Score: " + gameScore.ToString();
         }
         private void KeyHandler(object sender, KeyEventArgs e)
         {
@@ -77,20 +84,25 @@ namespace GameSnake
                 snake.dY = -1;
                 snake.dX = 0;
             }
-            if (e.Key == Key.Down && snake.dX != 0)
+            else if (e.Key == Key.Down && snake.dX != 0)
             {
                 snake.dY = 1;
                 snake.dX = 0;
             }
-            if (e.Key == Key.Left && snake.dY != 0)
+            else if (e.Key == Key.Left && snake.dY != 0)
             {
                 snake.dX = -1;
                 snake.dY = 0;
             }
-            if (e.Key == Key.Right && snake.dY!=0)
+            else if (e.Key == Key.Right && snake.dY!=0)
             {
                 snake.dX = 1;
                 snake.dY = 0;
+            }
+            if(e.Key == Key.Escape)
+            {
+                startGame = 0;
+                mainFrame.NavigationService.Navigate(new Menu());
             }
         }
 
