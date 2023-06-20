@@ -114,5 +114,11 @@
   <ItemGroup>
     <Resource Include="Sourse\играть.png" />
   </ItemGroup>
+  <ItemGroup />
+  <ItemGroup>
+    <Content Include="Sounds\background.wav" />
+    <Content Include="Sounds\chomp.wav" />
+    <Resource Include="Sourse\играть%28активная%29.png" />
+  </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

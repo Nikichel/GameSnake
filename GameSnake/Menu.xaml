@@ -16,9 +16,32 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel Orientation="Vertical" Margin="290,120,290,55" >
-            <Image Source="Sourse/играть.png" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown"/>
-            <Image Source="Sourse/играть.png" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown"/>
-            <Image Source="Sourse/играть.png" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown"/>
+            <Image Name="StartGame"  Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Source" Value="Sourse/играть.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=StartGame}"
+                                         Value="True">
+                                <Setter Property="Source" Value="Sourse/играть(активная).png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Name="Settings" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Source" Value="Sourse/играть.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Settings}"
+                                         Value="True">
+                                <Setter Property="Source" Value="Sourse/играть(активная).png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
         </StackPanel>
     </Grid>
 </Page>

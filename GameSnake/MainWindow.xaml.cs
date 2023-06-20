@@ -1,18 +1,8 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Threading;
 using System.Windows;
-using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
+using System.Media;
 
 namespace GameSnake
 {
@@ -29,17 +19,23 @@ namespace GameSnake
         int gameSpeed;
         DispatcherTimer timer;
         int lastScore;
+        /*SoundPlayer backSound;*/
+        /*SoundPlayer eatSound;*/
         public MainWindow()
         {
             InitializeComponent();
             mainFrame.NavigationService.Navigate(new Menu());
 
             gameSpeed = 150;
-            snake = new Snake(gameField);
-            fruit = new Fruit(gameField);
             gameScore = 0;
             lastScore = 0;
+
+            /*eatSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\chomp.wav");*/
+            /*backSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav");*/
             timer = new DispatcherTimer();
+            snake = new Snake(gameField);
+            fruit = new Fruit(gameField);
+
             timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
             timer.Tick += new EventHandler(update);
             timer.Start();
@@ -57,6 +53,7 @@ namespace GameSnake
                     gameScore += fruit.Point;
                     snake.eatFruct();
                     fruit.generatorFruit();
+                    //eatSound.Play();
                 }
                 if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0 || snake.eatBody())
                 {
@@ -99,8 +96,9 @@ namespace GameSnake
                 snake.dX = 1;
                 snake.dY = 0;
             }
-            if(e.Key == Key.Escape)
+            if(e.Key == Key.Escape && startGame == 1)
             {
+                /*backSound.PlayLooping();*/
                 startGame = 0;
                 mainFrame.NavigationService.Navigate(new Menu());
             }
@@ -108,7 +106,7 @@ namespace GameSnake
 
         private void gameLoaded(object sender, RoutedEventArgs e)
         {
-           
+            //backSound.PlayLooping();
         }
     }
 }
