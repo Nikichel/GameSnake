@@ -2,6 +2,9 @@
 using System.Windows.Input;
 using System.Windows.Navigation;
 using System.Media;
+using System.Windows;
+using System.Windows.Media;
+using System;
 
 namespace GameSnake
 {
@@ -13,17 +16,38 @@ namespace GameSnake
     public partial class Menu : Page
     {
 
-        SoundPlayer backSound;
+        //public static SoundPlayer backSound;
+
+        public static MediaPlayer backSound = new MediaPlayer();
         public Menu()
         {
             InitializeComponent();
-            backSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav");
-            backSound.PlayLooping();
         }
-        private void Image_MouseDown(object sender, MouseButtonEventArgs e)
+        private void Play(object sender, MouseButtonEventArgs e)
         {
             NavigationService.Navigate(new EmptyPage());
             backSound.Stop();
+        }
+        private void Setting(object sender, MouseButtonEventArgs e)
+        {
+            NavigationService.Navigate(new Settings());
+        }
+        private void QuitFromGame(object sender, MouseButtonEventArgs e)
+        {
+            MainWindow.stopGame = 1;
+        }
+
+        private void Grid_Loaded(object sender, RoutedEventArgs e)
+        {
+            backSound.Open(new Uri(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav"));
+
+            backSound.MediaEnded += (send, args) =>
+            {
+                backSound.Position = TimeSpan.Zero;
+                backSound.Play();
+            };
+
+            backSound.Play();
         }
     }
 }

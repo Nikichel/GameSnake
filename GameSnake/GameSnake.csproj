@@ -34,6 +34,9 @@
     <ErrorReport>prompt</ErrorReport>
     <WarningLevel>4</WarningLevel>
   </PropertyGroup>
+  <PropertyGroup>
+    <ApplicationIcon>icon-snake.ico</ApplicationIcon>
+  </PropertyGroup>
   <ItemGroup>
     <Reference Include="System" />
     <Reference Include="System.Data" />
@@ -62,6 +65,9 @@
     <Compile Include="Menu.xaml.cs">
       <DependentUpon>Menu.xaml</DependentUpon>
     </Compile>
+    <Compile Include="Settings.xaml.cs">
+      <DependentUpon>Settings.xaml</DependentUpon>
+    </Compile>
     <Compile Include="Snake.cs" />
     <Page Include="EmptyPage.xaml">
       <SubType>Designer</SubType>
@@ -81,6 +87,10 @@
       <SubType>Code</SubType>
     </Compile>
     <Page Include="Menu.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Settings.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
@@ -116,8 +126,17 @@
   </ItemGroup>
   <ItemGroup />
   <ItemGroup>
+    <Resource Include="Sourse\назад%28активная%29.png" />
+    <Resource Include="Sourse\назад.png" />
+    <Resource Include="Sourse\опции%28меню%29.png" />
+    <Resource Include="Sourse\выйти%28активная%29.png" />
+    <Resource Include="Sourse\выйти.png" />
+    <Resource Include="Sourse\опции%28активная%29.png" />
+    <Resource Include="Sourse\опции.png" />
+    <Resource Include="icon-snake.ico" />
     <Content Include="Sounds\background.wav" />
     <Content Include="Sounds\chomp.wav" />
+    <Resource Include="Sourse\icon-snake.ico" />
     <Resource Include="Sourse\играть%28активная%29.png" />
   </ItemGroup>
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />

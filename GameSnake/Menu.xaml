@@ -8,7 +8,7 @@
       d:DesignHeight="550" d:DesignWidth="1080" 
       Title="Menu">
 
-    <Grid>
+    <Grid Loaded="Grid_Loaded">
         <Grid.Background>
             <LinearGradientBrush EndPoint="0.5,1" StartPoint="0.5,0">
                 <GradientStop Color="#FF164E25" Offset="1"/>
@@ -16,7 +16,7 @@
             </LinearGradientBrush>
         </Grid.Background>
         <StackPanel Orientation="Vertical" Margin="290,120,290,55" >
-            <Image Name="StartGame"  Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown">
+            <Image Name="StartGame"  Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Play">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
                         <Setter Property="Source" Value="Sourse/играть.png"/>
@@ -29,14 +29,27 @@
                     </Style>
                 </Image.Style>
             </Image>
-            <Image Name="Settings" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Image_MouseDown">
+            <Image Name="Settings" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="Setting">
                 <Image.Style>
                     <Style TargetType="{x:Type Image}">
-                        <Setter Property="Source" Value="Sourse/играть.png"/>
+                        <Setter Property="Source" Value="Sourse/опции.png"/>
                         <Style.Triggers>
                             <DataTrigger Binding="{Binding IsMouseOver, ElementName=Settings}"
                                          Value="True">
-                                <Setter Property="Source" Value="Sourse/играть(активная).png"/>
+                                <Setter Property="Source" Value="Sourse/опции(активная).png"/>
+                            </DataTrigger>
+                        </Style.Triggers>
+                    </Style>
+                </Image.Style>
+            </Image>
+            <Image Name="Quit" Height="80" Width="200" OpacityMask="#FF1B9F71" MouseDown="QuitFromGame">
+                <Image.Style>
+                    <Style TargetType="{x:Type Image}">
+                        <Setter Property="Source" Value="Sourse/выйти.png"/>
+                        <Style.Triggers>
+                            <DataTrigger Binding="{Binding IsMouseOver, ElementName=Quit}"
+                                         Value="True">
+                                <Setter Property="Source" Value="Sourse/выйти(активная).png"/>
                             </DataTrigger>
                         </Style.Triggers>
                     </Style>

@@ -2,7 +2,6 @@
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Input;
-using System.Media;
 
 namespace GameSnake
 {
@@ -12,6 +11,7 @@ namespace GameSnake
     public partial class MainWindow : Window
     {
         public static int startGame = 0;
+        public static int stopGame = 0;
 
         Snake snake;
         Fruit fruit;
@@ -19,8 +19,6 @@ namespace GameSnake
         int gameSpeed;
         DispatcherTimer timer;
         int lastScore;
-        /*SoundPlayer backSound;*/
-        /*SoundPlayer eatSound;*/
         public MainWindow()
         {
             InitializeComponent();
@@ -30,8 +28,6 @@ namespace GameSnake
             gameScore = 0;
             lastScore = 0;
 
-            /*eatSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\chomp.wav");*/
-            /*backSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav");*/
             timer = new DispatcherTimer();
             snake = new Snake(gameField);
             fruit = new Fruit(gameField);
@@ -53,15 +49,18 @@ namespace GameSnake
                     gameScore += fruit.Point;
                     snake.eatFruct();
                     fruit.generatorFruit();
-                    //eatSound.Play();
                 }
                 if (snake.X>gameField.Width-snake.getWidth() || snake.X<0 || snake.Y>gameField.Height-snake.getHeight() || snake.Y<0 || snake.eatBody())
                 {
+                    startGame = 0;
                     MessageBox.Show("Вы проиграли\n" + "Ваш счет: " + gameScore.ToString());
-                    gameScore = 0;
                     snake.die();
-                    gameSpeed=150;
+
+                    gameSpeed = 150;
+                    gameScore = 0;
                     timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
+
+                    mainFrame.NavigationService.Navigate(new Menu());
                 }
                 if (gameScore%30==0 && gameScore!=lastScore)
                 {
@@ -73,6 +72,8 @@ namespace GameSnake
                 fruit._update();
                 score.Text = "Score: " + gameScore.ToString();
             }
+            if (stopGame == 1)
+                this.Close();
         }
         private void KeyHandler(object sender, KeyEventArgs e)
         {
@@ -98,7 +99,6 @@ namespace GameSnake
             }
             if(e.Key == Key.Escape && startGame == 1)
             {
-                /*backSound.PlayLooping();*/
                 startGame = 0;
                 mainFrame.NavigationService.Navigate(new Menu());
             }
