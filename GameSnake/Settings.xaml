@@ -17,7 +17,7 @@
         </Grid.Background>
         <Rectangle Stroke="Black" Fill="#FF448F58" Margin="330,160,330,120"/>
         <Slider x:Name="backSounSlider" Margin="401,201,401,-201" LargeChange="0" Maximum="1" ValueChanged="Slider_ValueChanged"/>
-        <Slider Margin="401,275,401,-275" LargeChange="0" Maximum="1"/>
+        <Slider x:Name="eatSounSlider" Margin="401,275,401,-275" LargeChange="0" Maximum="1" ValueChanged="eatSounSlider_ValueChanged"/>
         <Image Name="Back" OpacityMask="#FF1B9F71" MouseDown="BackToMenu" Margin="413,320,413,131">
             <Image.Style>
                 <Style TargetType="{x:Type Image}">

@@ -23,19 +23,25 @@ namespace GameSnake
         public Settings()
         {
             InitializeComponent();
-            backSounSlider.Value = Menu.backSound.Volume;
+            backSounSlider.Value = MainWindow.backSound.Volume;
+            eatSounSlider.Value = Snake.eatSound.Volume;
         }
 
         private void BackToMenu(object sender, MouseButtonEventArgs e)
         {
-            Menu.backSound.Stop();
+            //MainWindow.backSound.Stop();
             NavigationService.Navigate(new Menu());
                 
         }
 
         private void Slider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
         {
-            Menu.backSound.Volume = backSounSlider.Value;
+            MainWindow.backSound.Volume = backSounSlider.Value;
+        }
+
+        private void eatSounSlider_ValueChanged(object sender, RoutedPropertyChangedEventArgs<double> e)
+        {
+            Snake.eatSound.Volume =  eatSounSlider.Value;
         }
     }
 }

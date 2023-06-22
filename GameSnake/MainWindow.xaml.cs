@@ -2,6 +2,7 @@
 using System.Windows.Threading;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Media;
 
 namespace GameSnake
 {
@@ -12,6 +13,7 @@ namespace GameSnake
     {
         public static int startGame = 0;
         public static int stopGame = 0;
+        public static MediaPlayer backSound = new MediaPlayer();
 
         Snake snake;
         Fruit fruit;
@@ -59,6 +61,7 @@ namespace GameSnake
                     gameSpeed = 150;
                     gameScore = 0;
                     timer.Interval = TimeSpan.FromMilliseconds(gameSpeed);
+                    backSound.Play();
 
                     mainFrame.NavigationService.Navigate(new Menu());
                 }
@@ -99,6 +102,7 @@ namespace GameSnake
             }
             if(e.Key == Key.Escape && startGame == 1)
             {
+                backSound.Play();
                 startGame = 0;
                 mainFrame.NavigationService.Navigate(new Menu());
             }
@@ -106,7 +110,14 @@ namespace GameSnake
 
         private void gameLoaded(object sender, RoutedEventArgs e)
         {
-            //backSound.PlayLooping();
+            backSound.Open(new Uri(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav"));
+            backSound.Volume = 1;
+            backSound.MediaEnded += (send, args) =>
+            {
+                backSound.Position = TimeSpan.Zero;
+                backSound.Play();
+            };
+                backSound.Play();
         }
     }
 }

@@ -11,11 +11,14 @@ namespace GameSnake
 {
     class Snake : Entity
     {
-        SoundPlayer eatSound;
+        public static MediaPlayer eatSound;
         private List<Rectangle> body;
         public Snake(Canvas gameField) : base(gameField)
         {
-            eatSound = new SoundPlayer(@"D:\Проекты\GameSnake\GameSnake\Sounds\chomp.wav");
+            eatSound = new MediaPlayer();
+            eatSound.Open(new Uri(@"D:\Проекты\GameSnake\GameSnake\Sounds\chomp.wav"));
+            eatSound.Volume = 1;
+
             body = new List<Rectangle>();
             increaseLength();
         
@@ -68,6 +71,7 @@ namespace GameSnake
         public void eatFruct()
         {
             eatSound.Play();
+            eatSound.Position = TimeSpan.Zero;
             switch (dX)
             {
                 case -1:

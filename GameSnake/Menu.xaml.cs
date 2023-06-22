@@ -18,7 +18,8 @@ namespace GameSnake
 
         //public static SoundPlayer backSound;
 
-        public static MediaPlayer backSound = new MediaPlayer();
+        //public static MediaPlayer backSound = new MediaPlayer();
+
         public Menu()
         {
             InitializeComponent();
@@ -26,7 +27,7 @@ namespace GameSnake
         private void Play(object sender, MouseButtonEventArgs e)
         {
             NavigationService.Navigate(new EmptyPage());
-            backSound.Stop();
+            MainWindow.backSound.Stop();
         }
         private void Setting(object sender, MouseButtonEventArgs e)
         {
@@ -39,15 +40,7 @@ namespace GameSnake
 
         private void Grid_Loaded(object sender, RoutedEventArgs e)
         {
-            backSound.Open(new Uri(@"D:\Проекты\GameSnake\GameSnake\Sounds\background.wav"));
-
-            backSound.MediaEnded += (send, args) =>
-            {
-                backSound.Position = TimeSpan.Zero;
-                backSound.Play();
-            };
-
-            backSound.Play();
+            
         }
     }
 }
